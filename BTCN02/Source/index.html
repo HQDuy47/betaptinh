@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bé tập tính</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="./css/style.css" rel="stylesheet">
+    <title>Bé tập tính</title>
+</head>
+<body>
+    <h1>Bé tập tính</h1>
+    <div class="d-flex justify-content-center">
+    <div class="d-flex mb-3">   
+        <div class="p-2">
+            <div class="d-flex flex-column mb-3">
+                <div class="p-2"> 
+                    <label for="so1">Số thứ 1</label>
+                <input type="text" id="so1">
+                </div>
+                <div class="p-2"> 
+                    <label for="so2">Số thứ 2</label>
+                <input type="text" id="so2">
+                </div>
+                <div class="p-2"> 
+                    <label for="ketqua">Kết quả&#160;</label>
+                <input type="text" id="ketqua">
+                </div>
+            </div>
+        </div>
+        <div class="p-2">
+            <input type="radio" name="calculation" id="cong">
+            <label for="calculation">Cộng</label>
+            <br>
+            <br>
+            <input type="radio" name="calculation" id="nhan">
+            <label for="calculation">Nhân</label>
+            <br>
+            <br>
+            <button type="button" class="cal btn-secondary">Tính</button>
+        </div>
+        <div class="p-2">
+            <input type="radio" name="calculation" id="tru">
+            <label for="calculation">Trừ</label>
+            <br>
+            <br>
+            <input type="radio" name="calculation" id="chia">
+            <label for="calculation">Chia</label><br>
+        </div>   
+    </div>
+    </div>
+    <label>Thông báo:</label>
+    <p id="notify"></p>
+    <script>
+    const list_check = document.getElementsByName("calculation");
+    const result = document.getElementById("ketqua");
+    const calculate = document.getElementsByClassName("cal")[0];
+    const notify = document.getElementById("notify");
+    notify.style.color = "red";
+    let num1;
+    let num2;
+    
+    function addition(a, b) {
+        return a + b;
+    }
+
+    function subtraction(a, b) {
+        return a - b;
+    }
+
+    function multiplication(a, b) {
+        return a * b;
+    }
+
+    function division(a, b) {
+        return a / b;
+    }
+
+    let select;
+    let temp;
+    let check = 0;
+
+    list_check.forEach((cal) => {
+        cal.addEventListener("click", () => {
+            notify.innerText = "";
+            select = cal;
+        });
+    });
+
+    calculate.addEventListener("click", () => {
+        if (select == undefined) {
+            notify.innerText = "Chưa chọn phép tính";
+            console.log(1);
+            return;
+        }
+        notify.innerText = "";
+        if (select.id == "cong") {
+            temp = addition(parseFloat(num1), parseFloat(num2));
+        }
+        if (select.id == "tru") {
+            temp = subtraction(parseFloat(num1), parseFloat(num2));
+        }
+        if (select.id == "nhan") {
+            temp = multiplication(parseFloat(num1), parseFloat(num2));
+        }
+        if (select.id == "chia") {
+            temp = division(parseFloat(num1), parseFloat(num2));
+        }
+        result.value = temp;
+    });
+
+    document.addEventListener("click", (e) => {
+        num1 = document.getElementById("so1").value;
+        num2 = document.getElementById("so2").value;
+        if (!e.target.matches("#so1") || !e.target.matches("#so2")) {
+            for (let i in num1) {
+                if (num1[i].toLowerCase() >= "a" && num1[i].toLowerCase() <= "z") {
+                    check = 1;
+                    notify.innerText = "Giá trị nhập ở ô Số thứ 1 không phải là số";
+                    return;
+                }
+            }
+            for (let i in num2) {
+                console.log(num2[i]);
+                if (num2[i].toLowerCase() >= "a" && num2[i].toLowerCase() <= "z") {
+                    check = 2;
+                    notify.innerText = "Giá trị nhập ở ô Số thứ 2 không phải là số";
+                    return;
+                }
+            }
+        }
+        if (e.target.matches("#ketqua")){
+            return;
+        }
+        else{
+            notify.innerText ="";
+        }
+    });
+    </script>
+</body>
+</html>
